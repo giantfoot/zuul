@@ -1,0 +1,56 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.9.RELEASE'
+	}
+	repositories {
+		maven { url ctspclRepotory }
+		mavenLocal()
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.test'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+repositories {
+	maven { url ctspclRepotory }
+	mavenLocal()
+	mavenCentral()
+}
+jar {
+	//用于打包jar文件的名称和版本
+	baseName = 'zuul'
+	version =  '0.0.1-SNAPSHOT'
+}
+
+ext {
+	springCloudVersion = 'Edgware.RELEASE'
+}
+
+dependencies {
+	compile('org.springframework.cloud:spring-cloud-starter-eureka-server')
+	compile('org.springframework.cloud:spring-cloud-starter-config')
+	compile('org.springframework.boot:spring-boot-actuator')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+	compile('org.springframework.boot:spring-boot-starter-parent')
+	compile('org.springframework.cloud:spring-cloud-starter-zuul')
+	compile('org.springframework.boot:spring-boot-starter-web')
+
+    compile 'org.projectlombok:lombok'
+
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
